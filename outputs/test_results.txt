@@ -2,137 +2,137 @@ TAP version 13
 # Subtest: T01 health endpoint responds ok
 ok 1 - T01 health endpoint responds ok
   ---
-  duration_ms: 114.2246
+  duration_ms: 120.3131
   ...
 # Subtest: T02 upload valid PNG returns 201 and metadata
 ok 2 - T02 upload valid PNG returns 201 and metadata
   ---
-  duration_ms: 85.1558
+  duration_ms: 139.1536
   ...
 # Subtest: T03 upload without file is rejected (400)
 ok 3 - T03 upload without file is rejected (400)
   ---
-  duration_ms: 30.5569
+  duration_ms: 43.0825
   ...
 # Subtest: T04 non-image MIME type is rejected
 ok 4 - T04 non-image MIME type is rejected
   ---
-  duration_ms: 27.5752
+  duration_ms: 37.8093
   ...
 # Subtest: T05 disguised file (PHP content named .png) fails signature check
 ok 5 - T05 disguised file (PHP content named .png) fails signature check
   ---
-  duration_ms: 23.7549
+  duration_ms: 66.8671
   ...
 # Subtest: T06 file above size limit is rejected
 ok 6 - T06 file above size limit is rejected
   ---
-  duration_ms: 52.3849
+  duration_ms: 67.0898
   ...
 # Subtest: T07 list returns uploaded photo
 ok 7 - T07 list returns uploaded photo
   ---
-  duration_ms: 22.2634
+  duration_ms: 32.7128
   ...
 # Subtest: T08 search by title and tag
 ok 8 - T08 search by title and tag
   ---
-  duration_ms: 27.4621
+  duration_ms: 64.7861
   ...
 # Subtest: T09 album filter works (case-insensitive)
 ok 9 - T09 album filter works (case-insensitive)
   ---
-  duration_ms: 62.7381
+  duration_ms: 16.7141
   ...
 # Subtest: T10 favorite toggle and favorites view
 ok 10 - T10 favorite toggle and favorites view
   ---
-  duration_ms: 63.7137
+  duration_ms: 84.2539
   ...
 # Subtest: T11 metadata update, and empty title rejected
 ok 11 - T11 metadata update, and empty title rejected
   ---
-  duration_ms: 117.2349
+  duration_ms: 98.4862
   ...
 # Subtest: T12 permanent delete blocked while photo is not in Trash (409)
 ok 12 - T12 permanent delete blocked while photo is not in Trash (409)
   ---
-  duration_ms: 53.3148
+  duration_ms: 46.6777
   ...
 # Subtest: T13 soft delete moves photo to Trash view only
 ok 13 - T13 soft delete moves photo to Trash view only
   ---
-  duration_ms: 117.8134
+  duration_ms: 117.5703
   ...
 # Subtest: T14 stats report trash count
 ok 14 - T14 stats report trash count
   ---
-  duration_ms: 13.7223
+  duration_ms: 23.1459
   ...
 # Subtest: T15 restore brings photo back
 ok 15 - T15 restore brings photo back
   ---
-  duration_ms: 39.3999
+  duration_ms: 147.3889
   ...
 # Subtest: T16 unknown id returns 404; bad id returns 400
 ok 16 - T16 unknown id returns 404; bad id returns 400
   ---
-  duration_ms: 30.5389
+  duration_ms: 41.4889
   ...
 # Subtest: T17 SQL injection string in search is treated as plain text
 ok 17 - T17 SQL injection string in search is treated as plain text
   ---
-  duration_ms: 14.3231
+  duration_ms: 34.2678
   ...
 # Subtest: T18 permanent delete removes DB row and file from disk
 ok 18 - T18 permanent delete removes DB row and file from disk
   ---
-  duration_ms: 185.6009
+  duration_ms: 325.3443
   ...
 # Subtest: T19 repeated query params are handled instead of crashing (500)
 ok 19 - T19 repeated query params are handled instead of crashing (500)
   ---
-  duration_ms: 24.9624
+  duration_ms: 94.8172
   ...
 # Subtest: T20 repeated multipart fields do not crash the upload (500)
 ok 20 - T20 repeated multipart fields do not crash the upload (500)
   ---
-  duration_ms: 40.6701
+  duration_ms: 67.8118
   ...
 # Subtest: T21 non-string metadata values are coerced, not crashed on
 ok 21 - T21 non-string metadata values are coerced, not crashed on
   ---
-  duration_ms: 49.8332
+  duration_ms: 84.4263
   ...
 # Subtest: T22 partial metadata update keeps the fields that were not sent
 ok 22 - T22 partial metadata update keeps the fields that were not sent
   ---
-  duration_ms: 68.284
+  duration_ms: 128.1029
   ...
 # Subtest: T23 blank title falls back to the original filename
 ok 23 - T23 blank title falls back to the original filename
   ---
-  duration_ms: 48.5569
+  duration_ms: 64.3851
   ...
 # Subtest: T24 LIKE wildcards in search are treated as literal text
 ok 24 - T24 LIKE wildcards in search are treated as literal text
   ---
-  duration_ms: 124.6546
+  duration_ms: 86.1912
   ...
 # Subtest: T25 stats totalPhotos excludes photos sitting in Trash
 ok 25 - T25 stats totalPhotos excludes photos sitting in Trash
   ---
-  duration_ms: 267.1963
+  duration_ms: 139.4281
   ...
 # Subtest: T26 malformed JSON body returns 400, not 500
 ok 26 - T26 malformed JSON body returns 400, not 500
   ---
-  duration_ms: 10.8163
+  duration_ms: 61.2352
   ...
 # Subtest: T27 re-submitting identical metadata still returns 200 (not a false 404)
 ok 27 - T27 re-submitting identical metadata still returns 200 (not a false 404)
   ---
-  duration_ms: 45.7783
+  duration_ms: 105.3792
   ...
 1..27
 # tests 27
@@ -142,4 +142,4 @@ ok 27 - T27 re-submitting identical metadata still returns 200 (not a false 404)
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 2776.5854
+# duration_ms 3634.5569

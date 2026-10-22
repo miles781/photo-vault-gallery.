@@ -17,6 +17,10 @@ services:
     name: photovault
     runtime: node
     plan: free
+    # NOTE: sqlite3 is pinned to 5.1.7 because its Linux x64 prebuild only needs
+    # glibc 2.4, while the 6.x prebuild needs glibc 2.38 and fails to load on
+    # Render's runtime image with ERR_DLOPEN_FAILED. Do not bump it to 6.x
+    # without changing the base image or forcing a source build.
     buildCommand: npm ci --omit=dev
     startCommand: npm start
     healthCheckPath: /api/health

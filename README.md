@@ -92,6 +92,32 @@ behaviours cover this:
 | `UPLOAD_DIR` | `uploads` | Overrides the uploads folder |
 | `MAX_FILE_SIZE_MB` | `10` | Maximum upload size |
 
+### Native module pin
+
+`sqlite3` is a **native** module: it ships a prebuilt `.node` binary that has to
+match the platform it runs on. The version is pinned to **`5.1.7`** on purpose:
+
+| `sqlite3` | glibc needed | libstdc++ needed | Result |
+|---|---|---|---|
+| `6.x` | `GLIBC_2.38` | `GLIBCXX_3.4.31` (GCC 13) | ❌ fails on Render with `ERR_DLOPEN_FAILED` |
+| `5.1.7` | `GLIBC_2.4` | `GLIBCXX_3.4.21` (GCC 8) | ✅ loads on Render and on older distros |
+
+The `6.x` prebuilds were rebuilt against a newer distro than Render's runtime
+image, so the process died with
+`GLIBC_2.38 not found (required by node_sqlite3.node)` even though the build
+step succeeded. `5.1.7` is published as an N-API (ABI-stable) module, so the
+same binary works on Node 18, 20 and 22 without recompiling.
+
+Do **not** bump `sqlite3` to `6.x` unless Render's base image is also updated.
+If you do, the fix is to force a source build
+(`npm_config_build_from_source=sqlite3` in the build command), which needs
+`python3`, `make` and `g++` on the build image.
+
+The `overrides` block in `package.json` pins `tar` and `node-gyp` to patched
+versions. Both are only used while *installing* the native module (extracting
+the SQLite amalgamation and the Node headers) and are never loaded at runtime,
+but they kept `npm audit` reporting advisories.
+
 ### Verify a deployment
 
 ```bash
