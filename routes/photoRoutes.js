@@ -4,9 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const db = require('../database/db');
-
-const uploadDir = process.env.UPLOAD_DIR || path.join(__dirname, '../uploads');
-fs.mkdirSync(uploadDir, { recursive: true });
+const { uploadDir } = require('../config');
 
 const ALLOWED = { 'image/jpeg': ['.jpg', '.jpeg'], 'image/png': ['.png'], 'image/webp': ['.webp'], 'image/gif': ['.gif'] };
 

@@ -3,11 +3,16 @@
   "version": "1.0.0",
   "description": "PhotoVault - Google Photos style gallery (SIWES project by Igogo Ebenezer Akperemi)",
   "main": "server.js",
+  "engines": {
+    "node": ">=22.0.0 <23.0.0"
+  },
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
     "seed": "node scripts/seed.js",
     "snapshot": "node scripts/snapshot.js",
+    "verify:render": "node scripts/verify-render.js",
+    "verify:cli": "node scripts/verify-cli.js",
     "test": "node --test tests/api.test.js"
   },
   "dependencies": {

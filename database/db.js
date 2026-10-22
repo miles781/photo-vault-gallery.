@@ -1,8 +1,8 @@
 const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
+const { dbPath } = require('../config');
 
-// DB_PATH can be overridden (the automated tests use an isolated file)
-const dbPath = process.env.DB_PATH || path.resolve(__dirname, 'photovault.sqlite');
+// dbPath can be overridden (the automated tests use an isolated file, and
+// Render deployments point it at a mounted Persistent Disk via DATA_DIR).
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) console.error('Database connection failed:', err.message);
   else if (process.env.NODE_ENV !== 'test') console.log('Connected to SQLite database at', dbPath);

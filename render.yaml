@@ -1,0 +1,40 @@
+# PhotoVault — Render deployment blueprint
+#
+# Deploy with:  Render Dashboard -> New -> Blueprint -> point at this repo.
+# Or via the CLI:  render blueprint launch
+#
+# The `free` plan works, but note that Render's filesystem is ephemeral and
+# Free instances cannot mount a Persistent Disk. The app therefore auto-seeds
+# the 12 sample photos on boot whenever it finds an empty gallery, so the
+# deployed site is never a blank grid.
+#
+# To keep uploads and the database across restarts, switch `plan` to a paid
+# instance (e.g. `starter`) and uncomment the `disk` block below. The app
+# reads DATA_DIR and stores both the SQLite file and the uploads there.
+
+services:
+  - type: web
+    name: photovault
+    runtime: node
+    plan: free
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 22.22.0
+      - key: NODE_ENV
+        value: production
+      # Seeding is automatic when the gallery is empty; set to false to disable.
+      - key: AUTO_SEED
+        value: "true"
+      - key: MAX_FILE_SIZE_MB
+        value: 10
+      # Uncomment when a Persistent Disk is attached (paid plan only).
+      # - key: DATA_DIR
+      #   value: /var/data
+    # disk:
+    #   name: photovault-data
+    #   mountPath: /var/data
+    #   sizeGB: 1

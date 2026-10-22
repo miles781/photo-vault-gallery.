@@ -4,9 +4,9 @@ const path = require('path');
 const requestLogger = require('./middleware/logger');
 const errorHandler = require('./middleware/errorHandler');
 const photoRoutes = require('./routes/photoRoutes');
+const { uploadDir } = require('./config');
 
 const app = express();
-const uploadDir = process.env.UPLOAD_DIR || path.join(__dirname, 'uploads');
 
 app.use(cors());
 app.use(express.json());
