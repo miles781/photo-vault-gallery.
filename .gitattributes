@@ -1,0 +1,10 @@
+# Normalise line endings so the repo behaves the same on Windows and Linux
+* text=auto eol=lf
+
+# Binary assets must never be line-ending converted
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.sqlite binary

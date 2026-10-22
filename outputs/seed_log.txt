@@ -1,0 +1,12 @@
+skip camera__river_view.png
+skip camera__team_meetup.jpg
+skip projects__api_diagram.jpg
+skip projects__coding_night.jpg
+skip projects__hackathon.jpg
+skip travel__beach_trip.png
+skip travel__calabar_market.jpg
+skip travel__sunset_road.jpg
+skip university__campus_sunrise.png
+skip university__graduation_day.jpg
+skip university__lab_session.jpg
+skip university__library_desk.jpg

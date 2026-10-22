@@ -1,0 +1,145 @@
+TAP version 13
+# Subtest: T01 health endpoint responds ok
+ok 1 - T01 health endpoint responds ok
+  ---
+  duration_ms: 107.6781
+  ...
+# Subtest: T02 upload valid PNG returns 201 and metadata
+ok 2 - T02 upload valid PNG returns 201 and metadata
+  ---
+  duration_ms: 83.3539
+  ...
+# Subtest: T03 upload without file is rejected (400)
+ok 3 - T03 upload without file is rejected (400)
+  ---
+  duration_ms: 20.1692
+  ...
+# Subtest: T04 non-image MIME type is rejected
+ok 4 - T04 non-image MIME type is rejected
+  ---
+  duration_ms: 12.4941
+  ...
+# Subtest: T05 disguised file (PHP content named .png) fails signature check
+ok 5 - T05 disguised file (PHP content named .png) fails signature check
+  ---
+  duration_ms: 17.9151
+  ...
+# Subtest: T06 file above size limit is rejected
+ok 6 - T06 file above size limit is rejected
+  ---
+  duration_ms: 30.467
+  ...
+# Subtest: T07 list returns uploaded photo
+ok 7 - T07 list returns uploaded photo
+  ---
+  duration_ms: 9.4183
+  ...
+# Subtest: T08 search by title and tag
+ok 8 - T08 search by title and tag
+  ---
+  duration_ms: 15.9546
+  ...
+# Subtest: T09 album filter works (case-insensitive)
+ok 9 - T09 album filter works (case-insensitive)
+  ---
+  duration_ms: 8.9352
+  ...
+# Subtest: T10 favorite toggle and favorites view
+ok 10 - T10 favorite toggle and favorites view
+  ---
+  duration_ms: 35.5463
+  ...
+# Subtest: T11 metadata update, and empty title rejected
+ok 11 - T11 metadata update, and empty title rejected
+  ---
+  duration_ms: 56.3479
+  ...
+# Subtest: T12 permanent delete blocked while photo is not in Trash (409)
+ok 12 - T12 permanent delete blocked while photo is not in Trash (409)
+  ---
+  duration_ms: 9.7448
+  ...
+# Subtest: T13 soft delete moves photo to Trash view only
+ok 13 - T13 soft delete moves photo to Trash view only
+  ---
+  duration_ms: 50.7895
+  ...
+# Subtest: T14 stats report trash count
+ok 14 - T14 stats report trash count
+  ---
+  duration_ms: 15.5936
+  ...
+# Subtest: T15 restore brings photo back
+ok 15 - T15 restore brings photo back
+  ---
+  duration_ms: 52.5381
+  ...
+# Subtest: T16 unknown id returns 404; bad id returns 400
+ok 16 - T16 unknown id returns 404; bad id returns 400
+  ---
+  duration_ms: 32.2515
+  ...
+# Subtest: T17 SQL injection string in search is treated as plain text
+ok 17 - T17 SQL injection string in search is treated as plain text
+  ---
+  duration_ms: 20.6395
+  ...
+# Subtest: T18 permanent delete removes DB row and file from disk
+ok 18 - T18 permanent delete removes DB row and file from disk
+  ---
+  duration_ms: 192.3712
+  ...
+# Subtest: T19 repeated query params are handled instead of crashing (500)
+ok 19 - T19 repeated query params are handled instead of crashing (500)
+  ---
+  duration_ms: 16.2367
+  ...
+# Subtest: T20 repeated multipart fields do not crash the upload (500)
+ok 20 - T20 repeated multipart fields do not crash the upload (500)
+  ---
+  duration_ms: 32.4301
+  ...
+# Subtest: T21 non-string metadata values are coerced, not crashed on
+ok 21 - T21 non-string metadata values are coerced, not crashed on
+  ---
+  duration_ms: 34.7983
+  ...
+# Subtest: T22 partial metadata update keeps the fields that were not sent
+ok 22 - T22 partial metadata update keeps the fields that were not sent
+  ---
+  duration_ms: 59.7467
+  ...
+# Subtest: T23 blank title falls back to the original filename
+ok 23 - T23 blank title falls back to the original filename
+  ---
+  duration_ms: 31.8076
+  ...
+# Subtest: T24 LIKE wildcards in search are treated as literal text
+ok 24 - T24 LIKE wildcards in search are treated as literal text
+  ---
+  duration_ms: 41.5701
+  ...
+# Subtest: T25 stats totalPhotos excludes photos sitting in Trash
+ok 25 - T25 stats totalPhotos excludes photos sitting in Trash
+  ---
+  duration_ms: 64.7633
+  ...
+# Subtest: T26 malformed JSON body returns 400, not 500
+ok 26 - T26 malformed JSON body returns 400, not 500
+  ---
+  duration_ms: 10.2085
+  ...
+# Subtest: T27 re-submitting identical metadata still returns 200 (not a false 404)
+ok 27 - T27 re-submitting identical metadata still returns 200 (not a false 404)
+  ---
+  duration_ms: 42.4762
+  ...
+1..27
+# tests 27
+# suites 0
+# pass 27
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1792.1464

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhotoVault — Cloud Photo Gallery</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon"><span class="pin red"></span><span class="pin yellow"></span><span class="pin green"></span><span class="pin blue"></span></div>
+      <span class="brand-title">Photo<span>Vault</span></span>
+    </div>
+    <div class="search-wrapper">
+      <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <input type="text" id="searchInput" placeholder="Search photos, albums or tags..." autocomplete="off" />
+      <button id="clearSearchBtn" class="icon-btn hidden" title="Clear search">&times;</button>
+    </div>
+    <div class="topbar-actions"><button id="openUploadModalBtn" class="btn-upload">+ Upload</button></div>
+  </header>
+
+  <div id="toastBanner" class="toast hidden"></div>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <nav class="nav-list">
+        <button class="nav-item active" data-view="all"><span class="nav-icon">🖼️</span><span class="nav-label">Photos</span></button>
+        <button class="nav-item" data-view="favorites"><span class="nav-icon">⭐</span><span class="nav-label">Favorites</span><span id="favBadge" class="badge">0</span></button>
+        <button class="nav-item" data-view="trash"><span class="nav-icon">🗑️</span><span class="nav-label">Trash</span><span id="trashBadge" class="badge">0</span></button>
+      </nav>
+      <div class="sidebar-section">
+        <div class="section-header"><h4>Albums</h4><button id="resetAlbumBtn" class="text-btn hidden">Reset</button></div>
+        <div id="albumList" class="album-list"></div>
+      </div>
+      <div class="storage-card">
+        <div class="storage-header"><span>☁️ Storage Used</span><strong id="storageText">0 MB / 100 MB</strong></div>
+        <div class="progress-bar"><div id="storageFill" class="progress-fill" style="width: 0%"></div></div>
+        <small id="totalPhotosCount">0 photos stored</small>
+      </div>
+    </aside>
+
+    <main class="gallery-container">
+      <div class="gallery-toolbar">
+        <h2 id="currentViewTitle">Photos</h2>
+        <div id="loadingIndicator" class="spinner hidden">Loading...</div>
+      </div>
+      <div id="emptyState" class="empty-state hidden">
+        <div class="empty-illustration">📷</div>
+        <h3>No photos found</h3>
+        <p>Upload your favorite memories or adjust your search filter.</p>
+      </div>
+      <div id="timelineContainer" class="timeline-container"></div>
+    </main>
+  </div>
+
+  <div id="uploadModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header"><h3>Upload Photo to PhotoVault</h3><button id="closeUploadModalBtn" class="icon-btn">&times;</button></div>
+      <form id="uploadForm">
+        <div id="dropZone" class="drop-zone">
+          <!-- Not `required`: a hidden required control is un-focusable and silently
+               blocks submission in Chrome. The form handler validates the file itself. -->
+          <input type="file" id="imageInput" name="image" accept="image/jpeg,image/png,image/webp,image/gif" hidden />
+          <div id="dropPrompt">
+            <span class="upload-icon">☁️</span>
+            <p>Drag &amp; drop an image here, or <strong>click to browse</strong></p>
+            <small>Supports JPG, PNG, WEBP, GIF (Max 10MB)</small>
+          </div>
+          <img id="imagePreview" class="image-preview hidden" alt="Upload Preview" />
+        </div>
+        <div class="form-grid">
+          <div class="form-group"><label for="titleInput">Title</label><input type="text" id="titleInput" name="title" placeholder="e.g. Campus Defense Day" /></div>
+          <div class="form-group"><label for="albumInput">Album</label><input type="text" id="albumInput" name="album" placeholder="e.g. University" value="General" /></div>
+        </div>
+        <div class="form-group"><label for="tagsInput">Tags (comma separated)</label><input type="text" id="tagsInput" name="tags" placeholder="e.g. calabar, coding, 2026" /></div>
+        <div class="form-group"><label for="descInput">Description</label><textarea id="descInput" name="description" rows="2" placeholder="Add a note or memory..."></textarea></div>
+        <div class="modal-actions">
+          <button type="button" id="cancelUploadBtn" class="btn-secondary">Cancel</button>
+          <button type="submit" id="submitUploadBtn" class="btn-primary">Upload Photo</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="lightboxModal" class="lightbox hidden">
+    <div class="lightbox-topbar">
+      <button id="closeLightboxBtn" class="lightbox-btn" title="Close (Esc)">← Back</button>
+      <div class="lightbox-actions">
+        <button id="lightboxFavBtn" class="lightbox-btn" title="Toggle Favorite">☆ Favorite</button>
+        <a id="lightboxDownloadBtn" class="lightbox-btn" download title="Download Original">⬇ Download</a>
+        <button id="lightboxInfoBtn" class="lightbox-btn" title="Toggle Info Drawer">ⓘ Info</button>
+        <button id="lightboxTrashBtn" class="lightbox-btn danger" title="Move to Trash">🗑️ Trash</button>
+        <button id="lightboxDeletePermBtn" class="lightbox-btn danger hidden" title="Delete Forever">❌ Delete Forever</button>
+      </div>
+    </div>
+    <div class="lightbox-body">
+      <button id="prevPhotoBtn" class="nav-arrow left">❮</button>
+      <div class="lightbox-stage"><img id="lightboxImage" src="" alt="Full view" /></div>
+      <button id="nextPhotoBtn" class="nav-arrow right">❯</button>
+      <aside id="infoDrawer" class="info-drawer">
+        <h4>Photo Details</h4>
+        <form id="editMetadataForm">
+          <label for="editTitle">Title</label><input type="text" id="editTitle" required />
+          <label for="editAlbum">Album</label><input type="text" id="editAlbum" />
+          <label for="editTags">Tags</label><input type="text" id="editTags" />
+          <label for="editDesc">Description</label><textarea id="editDesc" rows="3"></textarea>
+          <button type="submit" class="btn-primary full-width">Save Changes</button>
+        </form>
+        <hr />
+        <div class="meta-specs">
+          <p><strong>Filename:</strong> <span id="metaFilename"></span></p>
+          <p><strong>Size:</strong> <span id="metaSize"></span></p>
+          <p><strong>Type:</strong> <span id="metaType"></span></p>
+          <p><strong>Uploaded:</strong> <span id="metaDate"></span></p>
+        </div>
+      </aside>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
